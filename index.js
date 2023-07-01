@@ -30,14 +30,14 @@ async function run() {
 
     app.get("/market", async (req, res) => {
       const query = {};
-      const news = newsCollection.find(query);
+      const news = await newsCollection.find(query);
       const newsSite = await news.toArray();
       res.send(newsSite);
     });
 
     app.get("/product", async (req, res) => {
       const query = {};
-      const products = productCollection.find(query);
+      const products = await productCollection.find(query);
       const product = await products.toArray();
       res.send(product);
     });
