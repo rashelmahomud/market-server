@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const { MongoClient, ServerApiVersion } = require("mongodb");
 
 const port = process.env.PORT || 5000;
 
@@ -34,12 +34,25 @@ async function run() {
       res.send(newsSite);
     });
 
+    // app.get("/product", async (req, res) => {
+    //   const query = {};
+    //   const products = await productCollection.find(query);
+    //   const product = await products.toArray();
+    //   res.send(product);
+    // });
+
     app.get("/product", async (req, res) => {
-      const query = {};
-      const products = await productCollection.find(query);
-      const product = await products.toArray();
-      res.send(product);
+      try {
+        const products = await productCollection.find({}).toArray();
+        res.status(200).send(products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).send({ message: "Failed to fetch products" });
+      }
     });
+    
+
+
 
     // app.get('market/:id', async (req, res) => {
 
